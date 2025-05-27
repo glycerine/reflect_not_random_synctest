@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func Test800_synctest_all_timers_dur_0_fire_now(t *testing.T) {
+func Test800_synctest_reflect_select(t *testing.T) {
 
 	if !faketime {
 		//t.Skip("test only for synctest.")
@@ -15,9 +15,8 @@ func Test800_synctest_all_timers_dur_0_fire_now(t *testing.T) {
 	}
 
 	bubbleOrNot(func() {
-		// "SimNet using synctest depends on all the times set to duration 0/now firing before we quiese to durable blocking. verify this assumption under synctest. yes: note the Go runtime implementation does a select with a default: so it will discard the timer alert rather than block. Update: arg. no, the runtime does a special thing where it does not execute that select until it has a goro ready to accept it, so it always suceeds, I think.
 
-		// really? yep
+		// really, is synctest not randomizing reflect.Select? yep.
 		firstCaseNonZeroSeen := false
 		attempts := 10000
 		for range attempts {
