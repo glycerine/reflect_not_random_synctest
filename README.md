@@ -1,8 +1,8 @@
 reflect_not_random_synctest
 ===========================
 
-I noticed that under the go 1.24.3 
-testing/synctest, there is a small
+I noticed that under the go 1.24.3 GOEXPERIMENT=synctest
+version of testing/synctest, there is a small
 randomization failure in reflect.Select.
 
 The first call to reflect.Select always 
