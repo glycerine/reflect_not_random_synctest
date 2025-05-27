@@ -14,12 +14,12 @@ test logs:
 
 ~~~
 -*- mode: compilation; default-directory: "~/go/src/github.com/glycerine/reflect_not_random_synctest/" -*-
-Compilation started at Tue May 27 06:55:19
+Compilation started at Tue May 27 06:58:50
 
 GOTRACEBACK=all GOEXPERIMENT=synctest go test -v
 faketime = true
 === RUN   Test800_synctest_all_timers_dur_0_fire_now
-panic: in 10000 attempts, the first reflect.Select case was always 0
+panic: 10000 attempts, chosen=0 always on the first reflect.Select()
 ~~~
 
 ~~~

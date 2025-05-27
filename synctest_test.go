@@ -70,7 +70,7 @@ func Test800_synctest_all_timers_dur_0_fire_now(t *testing.T) {
 		}
 
 		if !firstCaseNonZeroSeen {
-			panic(fmt.Sprintf("in %v attempts, the first reflect.Select case was always 0", attempts))
+			panic(fmt.Sprintf("%v attempts, chosen=0 always on the first reflect.Select()", attempts))
 		}
 
 	})
