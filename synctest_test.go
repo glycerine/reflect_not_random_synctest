@@ -42,7 +42,8 @@ func Test800_synctest_all_timers_dur_0_fire_now(t *testing.T) {
 			if !recvOK {
 				panic("why not recvOK ?")
 			}
-			vv("on i=%v, chosen=%v, timer %v: %v", i, chosen, order[ti], recvVal)
+			//vv("on i=%v, chosen=%v, timer %v: %v", i, chosen, order[ti], recvVal)
+			_, _, _, _ = i, chosen, recvVal, ti
 			got++
 		}
 		now := time.Now()
