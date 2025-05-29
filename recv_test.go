@@ -67,6 +67,60 @@ on i=9, chan read. chosen=3, received: 3, at 2000-01-01T00:00:00.000Z
 on i=10, timer fired. chosen=5, received: 2000-01-01 00:00:00 +0000 GMT m=+946307053.389413297, at 2000-01-01T00:00:00.000Z
 on i=11, timer fired. chosen=6, received: 2000-01-01 00:00:00 +0000 GMT m=+946307053.389413297, at 2000-01-01T00:00:00.000Z
 
+realtime okay? yes.
+
+ go test -v -run 801
+faketime = false
+=== RUN   Test801_synctest_chan_receives
+on i=0, timer fired. chosen=5, received: 2025-05-29 08:41:37.182439496 +0100 BST m=+0.000453402, at 2025-05-29T07:41:37.182Z
+on i=1, chan read. chosen=1, received: 1, at 2025-05-29T07:41:37.182Z
+on i=2, chan read. chosen=4, received: 4, at 2025-05-29T07:41:37.182Z
+on i=3, chan read. chosen=7, received: 5, at 2025-05-29T07:41:37.182Z
+on i=4, chan read. chosen=3, received: 3, at 2025-05-29T07:41:37.182Z
+on i=5, chan read. chosen=11, received: 9, at 2025-05-29T07:41:37.182Z
+on i=6, chan read. chosen=0, received: 0, at 2025-05-29T07:41:37.182Z
+on i=7, chan read. chosen=9, received: 7, at 2025-05-29T07:41:37.182Z
+on i=8, chan read. chosen=2, received: 2, at 2025-05-29T07:41:37.182Z
+on i=9, chan read. chosen=8, received: 6, at 2025-05-29T07:41:37.182Z
+on i=10, timer fired. chosen=6, received: 2025-05-29 08:41:37.18245407 +0100 BST m=+0.000468574, at 2025-05-29T07:41:37.182Z
+on i=11, chan read. chosen=10, received: 8, at 2025-05-29T07:41:37.182Z
+
+realtime again: good, order of timers varies.
+
+ go test -v -run 801
+faketime = false
+=== RUN   Test801_synctest_chan_receives
+on i=0, timer fired. chosen=6, received: 2025-05-29 08:42:05.307762552 +0100 BST m=+0.000836471, at 2025-05-29T07:42:05.307Z
+on i=1, chan read. chosen=4, received: 4, at 2025-05-29T07:42:05.308Z
+on i=2, chan read. chosen=10, received: 8, at 2025-05-29T07:42:05.308Z
+on i=3, chan read. chosen=8, received: 6, at 2025-05-29T07:42:05.308Z
+on i=4, chan read. chosen=7, received: 5, at 2025-05-29T07:42:05.308Z
+on i=5, timer fired. chosen=5, received: 2025-05-29 08:42:05.307736588 +0100 BST m=+0.000811335, at 2025-05-29T07:42:05.308Z
+on i=6, chan read. chosen=0, received: 0, at 2025-05-29T07:42:05.308Z
+on i=7, chan read. chosen=3, received: 3, at 2025-05-29T07:42:05.308Z
+on i=8, chan read. chosen=9, received: 7, at 2025-05-29T07:42:05.308Z
+on i=9, chan read. chosen=1, received: 1, at 2025-05-29T07:42:05.308Z
+on i=10, chan read. chosen=11, received: 9, at 2025-05-29T07:42:05.308Z
+on i=11, chan read. chosen=2, received: 2, at 2025-05-29T07:42:05.308Z
+
+realtime:
+
+ go test -v -run 801
+faketime = false
+=== RUN   Test801_synctest_chan_receives
+on i=0, chan read. chosen=2, received: 2, at 2025-05-29T07:42:47.935Z
+on i=1, chan read. chosen=10, received: 8, at 2025-05-29T07:42:47.935Z
+on i=2, chan read. chosen=11, received: 9, at 2025-05-29T07:42:47.935Z
+on i=3, chan read. chosen=9, received: 7, at 2025-05-29T07:42:47.935Z
+on i=4, chan read. chosen=7, received: 5, at 2025-05-29T07:42:47.935Z
+on i=5, chan read. chosen=4, received: 4, at 2025-05-29T07:42:47.935Z
+on i=6, chan read. chosen=3, received: 3, at 2025-05-29T07:42:47.935Z
+on i=7, timer fired. chosen=6, received: 2025-05-29 08:42:47.935489343 +0100 BST m=+0.000838372, at 2025-05-29T07:42:47.935Z
+on i=8, timer fired. chosen=5, received: 2025-05-29 08:42:47.93546375 +0100 BST m=+0.000812594, at 2025-05-29T07:42:47.935Z
+on i=9, chan read. chosen=8, received: 6, at 2025-05-29T07:42:47.935Z
+on i=10, chan read. chosen=0, received: 0, at 2025-05-29T07:42:47.935Z
+on i=11, chan read. chosen=1, received: 1, at 2025-05-29T07:42:47.935Z
+
 */
 func Test801_synctest_chan_receives(t *testing.T) {
 
@@ -79,10 +133,8 @@ func Test801_synctest_chan_receives(t *testing.T) {
 			//vv("start test801")
 			var chans []chan int
 			N := 10
-			//order := make(map[chan int]int)
 			for j := range N {
 				ch := make(chan int, 1)
-				//order[ti] = len(chans)
 				ch <- j
 				chans = append(chans, ch)
 			}
@@ -128,7 +180,7 @@ func Test801_synctest_chan_receives(t *testing.T) {
 			}
 
 			for i := range N + 2 {
-				//  <-ch
+
 				chosen, recvVal, recvOK := reflect.Select(cases)
 				if !recvOK {
 					panic("why not recvOK ?")
