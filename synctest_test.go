@@ -47,6 +47,7 @@ func Test800_synctest_reflect_select(t *testing.T) {
 				if !recvOK {
 					panic("why not recvOK ?")
 				}
+				fmt.Printf("on i=%v, chosen=%v, timer %v: %v\n", i, chosen, order[ti], nice(recvVal.Interface().(time.Time).In(gtz)))
 				//vv("on i=%v, chosen=%v, timer %v: %v", i, chosen, order[ti], recvVal)
 				_, _, _, _ = i, chosen, recvVal, ti
 				got++
