@@ -107,31 +107,31 @@ func Test802_synctest_permutations(t *testing.T) {
 }
 
 /*
-Compilation started at Thu Jun  5 08:05:55
+go 1.24.3 not using synctest
 
-/usr/local/dev-go/go/bin/go test -v -run 802
+Compilation started at Thu Jun  5 08:16:01
+
+go test -v -run 802
 faketime = false
 === RUN   Test802_synctest_permutations
 
-recv_compare_test.go:103 [pid 95884] 2025-06-05 07:05:57.620 +0000 UTC attempts = 100000
+recv_compare_test.go:103 [pid 96668] 2025-06-05 07:16:03.385 +0000 UTC attempts = 100000
 
-recv_compare_test.go:104 [pid 95884] 2025-06-05 07:05:57.620 +0000 UTC
+recv_compare_test.go:104 [pid 96668] 2025-06-05 07:16:03.385 +0000 UTC
+first = '[]int{8243, 8585, 8419, 8215, 8324, 8231, 8262, 8295, 8353, 8313, 8330, 8430}'
 
-first = '[]int{8272, 8406, 8485, 8420, 8449, 8321, 8150, 8274, 8394, 8263, 8251, 8315}'
+recv_compare_test.go:105 [pid 96668] 2025-06-05 07:16:03.385 +0000 UTC
+last = '[]int{8270, 8273, 8261, 8367, 8374, 8644, 8151, 8351, 8289, 8424, 8300, 8296}'
 
-recv_compare_test.go:105 [pid 95884] 2025-06-05 07:05:57.620 +0000 UTC
-
-last = '[]int{8357, 8400, 8263, 8585, 8422, 8220, 8257, 8261, 8266, 8236, 8387, 8346}'
-
---- PASS: Test802_synctest_permutations (1.64s)
+--- PASS: Test802_synctest_permutations (1.62s)
 PASS
-ok  	github.com/glycerine/reflect_not_random_synctest	1.790s
+ok  	github.com/glycerine/reflect_not_random_synctest	1.840s
 */
 
 /*
 Compilation started at Thu Jun  5 08:06:53
 
-go1.24.3:
+go1.24.3 using synctest:
 
 GOTRACEBACK=all GOEXPERIMENT=synctest go test -v -run 802
 faketime = true
@@ -140,18 +140,17 @@ faketime = true
 recv_compare_test.go:103 [pid 96171] 2000-01-01 00:00:00.000 +0000 UTC attempts = 100000
 
 recv_compare_test.go:104 [pid 96171] 2000-01-01 00:00:00.000 +0000 UTC
-
 first = '[]int{9947, 10021, 9999, 10057, 9915, 0, 0, 9986, 10083, 9990, 10029, 9973}'
 
 recv_compare_test.go:105 [pid 96171] 2000-01-01 00:00:00.000 +0000 UTC
-
 last = '[]int{0, 0, 0, 0, 0, 0, 100000, 0, 0, 0, 0, 0}'
 
 --- PASS: Test802_synctest_permutations (1.69s)
 */
 
 /*
-go 1.25 prerelease
+go 1.25 prerelease 3432c68467d50ffc622fed230a37cd401d82d4bf
+using synctest:
 
 Compilation started at Thu Jun  5 08:10:17
 
@@ -162,15 +161,35 @@ faketime = true
 recv_compare_test.go:103 [pid 96504] 2000-01-01 00:00:00.000 +0000 UTC attempts = 100000
 
 recv_compare_test.go:104 [pid 96504] 2000-01-01 00:00:00.000 +0000 UTC
-
 first = '[]int{8416, 8365, 8383, 8221, 8346, 8412, 8391, 8241, 8243, 8116, 8414, 8452}'
 
 recv_compare_test.go:105 [pid 96504] 2000-01-01 00:00:00.000 +0000 UTC
-
 last = '[]int{8336, 8293, 8419, 8378, 8266, 8265, 8158, 8357, 8253, 8453, 8511, 8311}'
 
 --- PASS: Test802_synctest_permutations (1.64s)
 PASS
 ok  	github.com/glycerine/reflect_not_random_synctest	1.868s
+
+*/
+
+/*
+
+go 1.25 prerelease 3432c68467d50ffc622fed230a37cd401d82d4bf
+** not using synctest **
+
+/usr/local/dev-go/go/bin/go test -v -run 802
+faketime = false
+=== RUN   Test802_synctest_permutations
+
+recv_compare_test.go:103 [pid 96615] 2025-06-05 07:14:54.642 +0000 UTC attempts = 100000
+
+recv_compare_test.go:104 [pid 96615] 2025-06-05 07:14:54.642 +0000 UTC
+first = '[]int{8244, 8412, 8222, 8534, 8432, 8379, 8272, 8193, 8537, 8303, 8272, 8200}'
+
+recv_compare_test.go:105 [pid 96615] 2025-06-05 07:14:54.642 +0000 UTC
+last = '[]int{8360, 8317, 8416, 8280, 8295, 8270, 8463, 8311, 8330, 8188, 8403, 8367}'
+--- PASS: Test802_synctest_permutations (1.62s)
+PASS
+ok  	github.com/glycerine/reflect_not_random_synctest	1.867s
 
 */
